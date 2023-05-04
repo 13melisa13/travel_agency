@@ -27,7 +27,7 @@ public class CityService {
         log.info("City was found by name {}",name);
         return repository.findByName(name);
     }
-    public List<City> findAllByOrderByName(String name){
+    public List<City> findAllByOrderByName(){
         log.info("All cities were found");
         return repository.findAllByOrderByNameAsc();
     }

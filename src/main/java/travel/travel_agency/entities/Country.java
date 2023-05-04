@@ -20,5 +20,9 @@ public class Country {
     private Integer id;
     private String name;
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
-    public List<City> cities;
+    private List<City> cities;
+
+    public Country(String name) {
+        this.name = name;
+    }
 }

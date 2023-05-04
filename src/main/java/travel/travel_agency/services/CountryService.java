@@ -17,11 +17,11 @@ import java.util.List;
 @Slf4j
 public class CountryService {
     private final CountryRepository repository;
-    public void saveNewCity(Country country){
+    public void saveNewCountry(Country country){
         repository.save(country);
         log.info("New country was saved {}",country);
     }
-    public void deleteAll(Country country){
+    public void deleteAll(){
         repository.deleteAll();
         log.info("All countries were deleted");
     }
@@ -29,7 +29,7 @@ public class CountryService {
         log.info("Country was found by name {}",name);
         return repository.findByName(name);
     }
-    public List<Country> findAllByOrderByName(String name){
+    public List<Country> findAllByOrderByName(){
         log.info("All countries were found");
         return repository.findAllByOrderByNameAsc();
     }

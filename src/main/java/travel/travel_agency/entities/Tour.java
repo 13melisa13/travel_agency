@@ -35,4 +35,12 @@ public class Tour {
     @ManyToOne(fetch = FetchType.LAZY)
     private User boughtBy;
 
+    public Tour(boolean isPresentSea, TypeOfBeach typeOfBeach, Integer price, Date dateFrom, Date dateTo, City city) {
+        this.isPresentSea = isPresentSea;
+        this.typeOfBeach = typeOfBeach;
+        this.price = price;
+        this.dateFrom = dateFrom;
+        this.dateTo = dateTo;
+        this.city = city;
+    }
 }

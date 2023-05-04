@@ -11,6 +11,7 @@ import lombok.*;
 @Entity
 @Table(name = "_city")
 public class City {
+
     @Id
     @GeneratedValue
     private Integer id;
@@ -20,5 +21,8 @@ public class City {
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
 
-
+    public City(String name, Country country) {
+        this.name = name;
+        this.country = country;
+    }
 }

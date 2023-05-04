@@ -41,9 +41,9 @@ public class SecurityConfig{
                 .authorizeHttpRequests()
                 .requestMatchers("/registration").anonymous()
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                .requestMatchers("/user/**").hasRole("USER")
+                .requestMatchers("/profile/**").hasRole("USER")
                 //Доступ разрешен всем пользователей
-                .requestMatchers("/").permitAll()
+                //.requestMatchers("/").permitAll()
                 //Все остальные страницы требуют аутентификации
                 .anyRequest().authenticated()
                 .and()

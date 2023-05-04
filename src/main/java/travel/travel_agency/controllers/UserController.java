@@ -27,7 +27,7 @@ public class UserController {
     ){
         try {
             service.saveUser(user);
-            return "login";
+            return "redirect:/login";
         } catch (Exception e){
             return "redirect:/registration";
         }
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public String index() {
+    public String profile() {
         return "profile";
     }
 }
