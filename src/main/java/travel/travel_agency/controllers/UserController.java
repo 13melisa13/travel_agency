@@ -1,13 +1,18 @@
 package travel.travel_agency.controllers;
 
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 import travel.travel_agency.entities.Role;
 import travel.travel_agency.entities.User;
 import travel.travel_agency.services.UserService;
 
 @RestController
+@Slf4j
 @RequiredArgsConstructor
 public class UserController {
     private final UserService service;
@@ -15,44 +20,52 @@ public class UserController {
 
     @GetMapping("/registration")
     @ModelAttribute
-    public String registration(Model model) {
+    public ModelAndView registration(Model model) {
         var user =new User();
         user.setRole(Role.USER);
         model.addAttribute("user",user );
-        return "registration";
+        return new ModelAndView("/registration");
     }
     @PostMapping(path="/registration")
-    public String register(
+    public ModelAndView register(
              @ModelAttribute("user")User user
     ){
         try {
             service.saveUser(user);
-            return "redirect:/login";
+            return new ModelAndView(new RedirectView("/profile"));
         } catch (Exception e){
-            return "redirect:/registration";
+            return new ModelAndView("/registration");
         }
     }
     @GetMapping("/login")
     @ModelAttribute
-    public String login(Model model) {
+    public ModelAndView login(Model model) {
         var user =new User();
         model.addAttribute("user", user);
-        return "login";
+        return new ModelAndView("/login");
+
     }
     @PostMapping("/login")
-    public String authenticate(
+    public ModelAndView authenticate(
             @ModelAttribute("user")User user
     ){
         try {
             service.authenticate(user);
-            return "redirect:/profile";
+            service.loadUserByUsername(user.getUsername());
+            System.out.println("reSult ok");
+            log.info("res ok");
+            return new ModelAndView(new RedirectView("/profile"));
         } catch (Exception e){
-            return "login";
+            System.out.println(e.getMessage());
+            log.info(e.getMessage());
+            return new ModelAndView("/login");
         }
     }
 
-    @GetMapping("/")
-    public String profile() {
-        return "profile";
+    @GetMapping("/profile")
+    @ModelAttribute
+    public ModelAndView profile(Model model) {
+        model.getAttribute("user");
+        return new ModelAndView("/profile");
     }
 }
