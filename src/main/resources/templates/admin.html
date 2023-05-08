@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Админ</title>
+</head>
+<body>
+<span> Доброе утро, <span th:text="${user.name} + '!' "/></span>
+<a th:href="new_tour_form">Добавить</a>
+    <table>
+        <tbody>
+    <tr th:each="tour: ${tours}">
+        <td th:text="${tour.id}" />
+<!--        <td th:text="${tour.dec}" />-->
+    </tr>
+    </tbody>
+    </table>
+
+</body>
+</html>

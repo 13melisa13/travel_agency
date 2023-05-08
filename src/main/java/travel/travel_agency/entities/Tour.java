@@ -11,7 +11,8 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -42,5 +43,19 @@ public class Tour {
         this.dateFrom = dateFrom;
         this.dateTo = dateTo;
         this.city = city;
+    }
+
+    @Override
+    public String toString() {
+        return "Tour{" +
+                "id=" + id +
+                ", isPresentSea=" + isPresentSea +
+                ", typeOfBeach=" + typeOfBeach +
+                ", price=" + price +
+                ", dateFrom=" + dateFrom +
+                ", dateTo=" + dateTo +
+                ", city=" + city +
+                ", boughtBy=" + boughtBy +
+                '}';
     }
 }

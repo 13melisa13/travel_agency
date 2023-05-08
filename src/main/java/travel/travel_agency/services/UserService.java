@@ -1,5 +1,6 @@
 package travel.travel_agency.services;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -38,20 +39,12 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public boolean authenticate(User user) {
-        if(repository.findByEmail(user.getEmail()) == null) {
-            log.info("Not found the user");
-            throw new RuntimeException("Такого пользователь не существует");
-        } else {
-            if (!repository.findByEmail(user.getEmail()).getPassword()
-                    .equals(passwordEncoder.encode(user.getPassword()))){
-                log.info("Wrong password for user");
-                throw new RuntimeException("Неверный логин или пароль");
-            }
-            log.info("Authenticate user with username {}", repository.findByEmail(user.getEmail()).getEmail());
-            return true;
-        }
+    @PostConstruct
+    public void saveAdmin() {
+        User admin = new User("admin@admin", passwordEncoder.encode("admin"),Role.ADMIN);
 
+        repository.save(admin);
+        log.info(admin.toString());
     }
 
     @Override

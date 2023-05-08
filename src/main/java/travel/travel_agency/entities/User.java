@@ -9,7 +9,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Data
+//@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -35,6 +37,7 @@ public class User implements UserDetails {
     public User(String email, String password, Role role){
         this.email=email;
         this.password=password;
+        this.role = role;
     }
 
     @Override
@@ -70,5 +73,34 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        if(tours == null) {
+            return "User{" +
+                    "id=" + id +
+                    ", surname='" + surname + '\'' +
+                    ", name='" + name + '\'' +
+                    ", lastname='" + lastname + '\'' +
+                    ", documentData='" + documentData + '\'' +
+                   ", email='" + email + '\'' +
+                    ", password='" + password + '\'' +
+                    ", role=" + role +
+                    '}';
+        } else {
+            return "User{" +
+                    "id=" + id +
+                    ", surname='" + surname + '\'' +
+                    ", name='" + name + '\'' +
+                    ", lastname='" + lastname + '\'' +
+                    ", documentData='" + documentData + '\'' +
+                    ", tours=" + tours + '\'' +
+                    ", email='" + email + '\'' +
+                    ", password='" + password + '\'' +
+                    ", role=" + role +
+                    '}';
+
+        }
     }
 }

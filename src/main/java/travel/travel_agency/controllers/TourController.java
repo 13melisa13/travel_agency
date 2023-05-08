@@ -25,8 +25,8 @@ public class TourController {
         return service.findAllByBought(user);
     }
     @PostMapping(path= "/tour/one")
-    public void save(@RequestParam Tour country){
-        service.saveNewTour(country);
+    public void save(@RequestParam Tour tour){
+        service.saveNewTour(tour);
     }
     @GetMapping("/tour/oneByPrice")
     public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
