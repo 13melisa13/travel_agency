@@ -74,24 +74,4 @@ public class UserController {
         model.addAttribute("tours", tourService.findAll());
         return new ModelAndView("/admin");
     }
-    @GetMapping("/new_tour_form")
-    @ModelAttribute
-    public ModelAndView new_tour_form(Model model) {
-        var tour = new Tour();
-        model.addAttribute("tour", tour);
-        return new ModelAndView("/new_tour_form");
-    }
-
-    @PostMapping(path = "/new_tour_form")
-    public ModelAndView new_tour(
-            @ModelAttribute("tour") Tour tour
-    ) {
-        try {
-            tourService.saveNewTour(tour);
-            return new ModelAndView(new RedirectView("/admin"));
-        } catch (Exception e) {
-            return new ModelAndView("/new_tour_form");
-        }
-    }
-
 }

@@ -31,7 +31,7 @@ public class SecurityConfig{
                 .requestMatchers("/registration").permitAll()
                 .requestMatchers("/profile").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/all_tour").hasAuthority("USER")
-                .requestMatchers("/admin", "/new_tour_form").hasAuthority("ADMIN")
+                .requestMatchers( "/new_tour_form","/admin").hasAuthority("ADMIN")
                 //Доступ разрешен всем пользователей
                 //.requestMatchers("/").permitAll()
                 //Все остальные страницы требуют аутентификации

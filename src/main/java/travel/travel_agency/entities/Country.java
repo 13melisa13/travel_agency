@@ -1,10 +1,8 @@
 package travel.travel_agency.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -19,6 +17,8 @@ public class Country {
     @GeneratedValue
     private Integer id;
     private String name;
+    @JsonIgnore
+    @ToString.Exclude
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
     private List<City> cities;
 

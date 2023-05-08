@@ -10,8 +10,12 @@
     <table>
         <tbody>
     <tr th:each="tour: ${tours}">
-        <td th:text="${tour.id}" />
-<!--        <td th:text="${tour.dec}" />-->
+        <td th:text="*{id}" />
+        <td th:text="*{dateFrom}" />
+        <td th:text="*{dateTo}" />
+        <td th:text="*{city.name}" />
+        <td th:text="*{city.country.name}" />
+<!--        <td th:text="${tour.dateFrom}" />-->
     </tr>
     </tbody>
     </table>

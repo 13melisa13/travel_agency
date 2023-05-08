@@ -21,7 +21,7 @@ public class TourService {
     private final TourRepository repository;
     public void saveNewTour(Tour tour){
         repository.save(tour);
-        log.info("New city was saved {}",tour);
+        log.info("New tour was saved {}",tour);
     }
     public void deleteAll(){
         repository.deleteAll();

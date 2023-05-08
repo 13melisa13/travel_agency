@@ -6,11 +6,11 @@
 </head>
 <body>
 
-<form action="#" th:action="@{/tour/one}" th:object="${tour}" method="post">
-  <div><label> Дата начала <input type="date" name="date" th:field="*{dateFrom}"/> </label></div>
-  <div><label> Дата окончания <input type="date" name="date" th:field="*{dateTo}"/> </label></div>
-  <div><label> Страна <input type="text" name="lastname" th:field="*{city.country}"/> </label></div>
-  <div><label> Город <input type="text" name="documentData" th:field="*{city.name}"/> </label></div>
+<form action="#" th:action="@{/new_tour_form}" th:object="${tour}"  method="post">
+  <div><label> Дата начала <input type="date" name="dateFrom" th:field="*{dateFrom}"/> </label></div>
+  <div><label> Дата окончания <input type="date" name="dateTo" th:field="*{dateTo}"/> </label></div>
+  <div><label> Страна <input type="text" name="lastname" th:field="${country.name}"/> </label></div>
+  <div><label> Город <input type="text" name="documentData" th:field="${city.name}"/> </label></div>
   <div th:switch="*{typeOfBeach}">
     <span th:case="'Sand'" th:text="Sand"></span>
     <span th:case="'Pebble'" th:text="Pebble"></span>

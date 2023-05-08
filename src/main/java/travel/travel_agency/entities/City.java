@@ -16,8 +16,7 @@ public class City {
     @GeneratedValue
     private Integer id;
     private String name;
-    @JsonIgnore
-    @ToString.Exclude
+
     @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
 

@@ -3,6 +3,7 @@ package travel.travel_agency.entities;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,7 +26,9 @@ public class Tour {
     private boolean isPresentSea;
     private TypeOfBeach typeOfBeach;
     private Integer price;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateFrom;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateTo;
     @JsonIgnore
     @ToString.Exclude
