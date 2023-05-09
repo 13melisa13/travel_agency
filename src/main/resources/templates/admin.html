@@ -5,19 +5,31 @@
     <title>Админ</title>
 </head>
 <body>
-<span> Доброе утро, <span th:text="${user.name} + '!' "/></span>
+<span> Доброе утро, <span th:text="${user.name} + '!' "></span></span>
 <a th:href="new_tour_form">Добавить</a>
     <table>
+        <thead>
+            <tr>
+                <td>№</td>
+                <td>Начало</td>
+                <td>Окончание</td>
+                <td>Город</td>
+                <td>Страна</td>
+                <td>Море</td>
+                <td>Цена</td>
+            </tr>
+        </thead>
         <tbody>
-    <tr th:each="tour: ${tours}">
-        <td th:text="*{id}" />
-        <td th:text="*{dateFrom}" />
-        <td th:text="*{dateTo}" />
-        <td th:text="*{city.name}" />
-        <td th:text="*{city.country.name}" />
-<!--        <td th:text="${tour.dateFrom}" />-->
-    </tr>
-    </tbody>
+            <tr th:each="tour: ${tours}">
+                <td th:text="${tour.id}"></td>
+                <td th:text="${tour.dateFrom}"></td>
+                <td th:text="${tour.dateTo}"></td>
+                <td th:text="${tour.city.name}"></td>
+                <td th:text="${tour.city.country.name}"></td>
+                <td th:text="${tour.isPresentSea}"></td>
+                <td th:text="${tour.price}"></td>
+            </tr>
+        </tbody>
     </table>
 
 </body>

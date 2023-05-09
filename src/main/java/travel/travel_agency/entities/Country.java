@@ -4,10 +4,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
-@Builder
+
+@Getter
+@ToString
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -17,12 +20,27 @@ public class Country {
     @GeneratedValue
     private Integer id;
     private String name;
-    @JsonIgnore
-    @ToString.Exclude
+//    @JsonIgnore
+//    @ToString.Include
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
     private List<City> cities;
+
+
 
     public Country(String name) {
         this.name = name;
     }
+//    @Override
+//    public String toString() {
+//        if (cities != null)
+//        return "Country{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                ", cities=" + cities +
+//                '}';
+//        else return "Country{" +
+//                "id=" + id +
+//                ", name='" + name + '\'' +
+//                "}";
+//    }
 }

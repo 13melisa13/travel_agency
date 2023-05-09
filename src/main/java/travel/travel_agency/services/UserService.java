@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
     @PostConstruct
     public void saveAdmin() {
         User admin = new User("admin@admin", passwordEncoder.encode("admin"),Role.ADMIN);
-
+        admin.setName("ADMIN");
         repository.save(admin);
         log.info(admin.toString());
     }

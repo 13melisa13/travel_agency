@@ -1,6 +1,7 @@
 package travel.travel_agency.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -30,12 +31,15 @@ public class Tour {
     private Date dateFrom;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date dateTo;
-    @JsonIgnore
+
+//    @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne//(fetch = FetchType.LAZY)
     private City city;
+
     @JsonIgnore
-    @ToString.Exclude
+    @ToString.Include
     @ManyToOne(fetch = FetchType.LAZY)
     private User boughtBy;
 

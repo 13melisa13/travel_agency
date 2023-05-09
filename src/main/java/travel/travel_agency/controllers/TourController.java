@@ -1,4 +1,5 @@
 package travel.travel_agency.controllers;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -32,25 +33,25 @@ public class TourController {
     @ModelAttribute
     @GetMapping("/new_tour_form")
     public ModelAndView newTourFormGet(Model model){
-        Country country = new Country();
-        City city = new City();
-        model.addAttribute("country", country);
-        //countryService.saveNewCountry(country);
-        model.addAttribute("city", city);
-        //cityService.saveNewCity(city);
         Tour tour = new Tour();
         model.addAttribute("tour", tour);
-        tour.setCity(city);
         return new ModelAndView("/new_tour_form");
+    }
+    @PostConstruct
+    public void addTours(){
+
+        Tour tour = new Tour(true, TypeOfBeach.Sand , 1450, new Date(), new Date(), new City("nameOfCity", new Country("nameOfCountry")));
+        countryService.saveNewCountry(tour.getCity().getCountry());
+        cityService.saveNewCity(tour.getCity());
+        tourService.saveNewTour(tour);
     }
     @PostMapping("/new_tour_form")
     public ModelAndView newTourFormPost(@ModelAttribute("tour") Tour tour,
-                                        @ModelAttribute("country") Country country,
-                                        @ModelAttribute("city") City city,
                                         Model model){
         try {
-            countryService.saveNewCountry(country);
-            cityService.saveNewCity(city);
+            countryService.saveNewCountry(tour.getCity().getCountry());
+            cityService.saveNewCity(tour.getCity());
+
             tourService.saveNewTour(tour);
             return new ModelAndView(new RedirectView("/admin"));
         } catch (Exception e) {

@@ -1,13 +1,11 @@
 package travel.travel_agency.services;
 
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import travel.travel_agency.entities.City;
-import travel.travel_agency.entities.Country;
-import travel.travel_agency.entities.Tour;
-import travel.travel_agency.entities.User;
+import travel.travel_agency.entities.*;
 import travel.travel_agency.repositories.CityRepository;
 import travel.travel_agency.repositories.TourRepository;
 
@@ -59,4 +57,5 @@ public class TourService {
         log.info("All countries were found");
         return (List<Tour>) repository.findAllByBoughtBy(user);
     }
+
 }
