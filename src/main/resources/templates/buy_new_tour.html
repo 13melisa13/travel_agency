@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Купить тур</title>
+</head>
+<body>
+<span> Доброе утро, <span th:text="${user.name}  "></span></span>
+<a href="/profile"><button>Профиль</button></a>
+<a href="/logout"><button>Выход</button></a>
+
+<!--<form>-->
+<!--    <table>-->
+<!--    <tr>-->
+<!--        <td><span><label> С <input type="date" name="dateFrom" th:field="${dateFrom}"/> </label></span>-->
+<!--            <span><label> По <input type="date" name="dateTo" th:field="${dateTo}"/> </label></span>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>-->
+<!--            <span><label> От <input type="text" name="priceFrom" th:field="${priceFrom}"/> </label></span>-->
+<!--            <span><label> До <input type="text" name="priceTo" th:field="${priceTo}"/> </label></span>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    <tr>-->
+<!--        <td>-->
+<!--            <span><label>Город<input type="text" name="city" th:field="${city}"/> </label></span>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--        <tr>-->
+<!--            <td>-->
+
+<!--            </td>-->
+<!--        </tr>-->
+
+
+<!--    </table>-->
+<!--</form>-->
+        <thead>
+            <tr>
+                <td>Начало</td>
+                <td>Окончание</td>
+                <td>Город</td>
+                <td>Страна</td>
+                <td>Цена</td>
+                <td>Куплен</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="tour: ${tours}">
+                <td th:text="${tour.dateFrom}"></td>
+                <td th:text="${tour.dateTo}"></td>
+                <td th:text="${tour.city.name}"></td>
+                <td th:text="${tour.city.country.name}"></td>
+                <td th:text="${tour.price}"></td>
+                <td>
+                    <form th:action="@{/buy_new_tour/{id}(id=${tour.id})}" th:method="post" >
+                        <input type="submit" value="Купить" />
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

@@ -25,20 +25,27 @@ public class TourService {
         repository.deleteAll();
         log.info("All tours were deleted");
     }
-
+    public void deleteOne(Integer id){
+        repository.deleteById(id);
+        log.info("Tours was deleted");
+    }
+    public void findOne(Integer id){
+        repository.findById(id);
+        log.info("Tours was deleted");
+    }
     public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
-            (Date dateFrom, Date dateTo, City city, boolean presentSea,Integer price){
+            (Date dateFrom, Date dateTo, City city, Integer price){
         log.info("All tours were found");
-        return repository.findByDateFromAfterAndDateToBeforeAndCityContainsAndIsPresentSeaAndPriceLessThan
-                (dateFrom, dateTo, city, presentSea, price);
+        return repository.findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan
+                (dateFrom, dateTo, city, price);
     }
 
-    public List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSea
-            (Date dateFrom, Date dateTo, City city, boolean presentSea){
-        log.info("All tours were found");
-        return repository.findByDateFromAfterAndDateToBeforeAndCityContainsAndIsPresentSea
-                (dateFrom, dateTo, city, presentSea);
-    }
+//    public List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSea
+//            (Date dateFrom, Date dateTo, City city, boolean presentSea){
+//        log.info("All tours were found");
+//        return repository.findByDateFromAfterAndDateToBeforeAndCityContainsAndIsPresentSea
+//                (dateFrom, dateTo, city, presentSea);
+//    }
     public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains
             (Date dateFrom, Date dateTo, City city){
         log.info("All tours were found");

@@ -8,11 +8,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import travel.travel_agency.entities.Role;
-import travel.travel_agency.entities.User;
+import travel.travel_agency.entities.*;
+import travel.travel_agency.repositories.TourRepository;
 import travel.travel_agency.repositories.UserRepository;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 @Slf4j
 @Service
@@ -21,13 +23,15 @@ public class UserService implements UserDetailsService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository repository;
+    private final TourRepository tourRepository;
 
     public List<User> getUsers(){
         return repository.findAll();
     }
     public void saveUser(User user) {
         if(repository.findByEmail(user.getEmail()) == null) {
-            user.setRole(Role.USER);
+            if(!Objects.equals(user.getEmail(), "admin@admin"))
+                user.setRole(Role.USER);
             user.setPassword(passwordEncoder.encode(user.getPassword()));
             repository.save(user);
             log.info("Saved new user");
@@ -38,14 +42,16 @@ public class UserService implements UserDetailsService {
             throw new RuntimeException("Такой пользователь уже существует");
         }
     }
-
-    @PostConstruct
-    public void saveAdmin() {
-        User admin = new User("admin@admin", passwordEncoder.encode("admin"),Role.ADMIN);
-        admin.setName("ADMIN");
-        repository.save(admin);
-        log.info(admin.toString());
+    public void boughtTourById(Integer idTour, Integer idUser){
+        Tour tour = tourRepository.findTourById(idTour);
+        tour.setBoughtBy(repository.findUserById(idUser));
+        tourRepository.save(tour);
+        log.info("Tout {} bought by {}",idTour, idUser);
     }
+    public User loadUser(String username) {
+        return repository.findByEmail(username);
+    }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

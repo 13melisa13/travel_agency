@@ -7,5 +7,6 @@ import travel.travel_agency.entities.User;
 import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer> {
+   User findUserById(Integer id);
    User findByEmail(String email);
 }

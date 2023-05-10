@@ -16,8 +16,10 @@ import java.util.List;
 public class CityService {
     private final CityRepository repository;
     public void saveNewCity(City city){
-        repository.save(city);
-        log.info("New city was saved {}",city);
+        if (repository.findByName(city.getName()) == null) {
+            repository.save(city);
+            log.info("New city was saved {}", city);
+        }
     }
     public void deleteAll(){
         repository.deleteAll();

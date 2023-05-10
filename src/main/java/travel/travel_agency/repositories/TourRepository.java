@@ -11,12 +11,11 @@ import java.util.List;
 
 @Repository
 public interface TourRepository extends CrudRepository<Tour,Integer> {
-
+    Tour findTourById(Integer id);
     List<Tour> findAllByBoughtBy(User user);
     List<Tour> findByDateFromAfterAndDateToBefore(Date dateFrom, Date dateTo);
     List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains(Date dateFrom, Date dateTo, City city);
-    List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndIsPresentSea(Date dateFrom, Date dateTo, City city, boolean isPresentSea);
-    List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndIsPresentSeaAndPriceLessThan(Date dateFrom, Date dateTo, City city, boolean isPresentSea,Integer price);
+    List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan(Date dateFrom, Date dateTo, City city, Integer price);
 
 
 }

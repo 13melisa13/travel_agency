@@ -14,33 +14,18 @@ import java.util.List;
 @Entity
 @Table(name = "_city")
 public class City {
-
     @Id
     @GeneratedValue
     private Integer id;
     private String name;
-
-    @JsonIgnore
-    @ToString.Include
-    @ManyToOne//(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Country country;
-
     @JsonIgnore
-    @OneToMany(/*fetch = FetchType.LAZY, */mappedBy = "city")
+    @ToString.Exclude
+    @OneToMany(mappedBy = "city")
     private List<Tour> tours;
-
     public City(String name, Country country) {
         this.name = name;
         this.country = country;
     }
-
-//    @Override
-//    public String toString() {
-//        return "City{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", country=" + country +
-//                '}';
-//    }
-
 }

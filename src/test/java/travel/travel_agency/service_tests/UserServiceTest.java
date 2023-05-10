@@ -46,15 +46,7 @@ public class UserServiceTest {
         Assertions.assertEquals("email1", captured.getEmail());
         Assertions.assertEquals(1, userService.getUsers().size());
     }
-    @Test
-    public void authenticate() {
-        UserService userService = new UserService(encoder,userRepository);
-        User user = new User("email1", "password", Role.USER);
-        Mockito.when(encoder.encode(user.getPassword())).thenReturn("password");
-        userService.saveUser(user);
-        Mockito.when(userRepository.findByEmail(user.getEmail())).thenReturn(user);
-        Assertions.assertTrue(userService.authenticate(user));
-    }
+
     @Test
     public void loadUserByUsername(){
         User user1 = new User("email1", "", Role.USER);

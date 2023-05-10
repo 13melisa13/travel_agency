@@ -6,30 +6,12 @@
 </head>
 <body>
 
-<form action="#" th:action="@{/new_tour_form}" th:object="${tour}"  method="post">
+<form  th:action="@{/new_tour_form}" th:object="${tour}"  method="post">
   <div><label> Дата начала <input type="date" name="dateFrom" th:field="*{dateFrom}"/> </label></div>
   <div><label> Дата окончания <input type="date" name="dateTo" th:field="*{dateTo}"/> </label></div>
   <div><label> Страна <input type="text" name="lastname" th:field="*{city.country.name}" /> </label></div>
   <div><label> Город <input type="text" name="documentData" th:field="*{city.name}" /> </label></div>
   <div><label> Цена <input type="text" name="documentData" th:field="*{price}" /> </label></div>
-  <div th:switch="*{typeOfBeach}">
-    <span th:case="'Sand'" th:text="Sand"></span>
-    <span th:case="'Pebble'" th:text="Pebble"></span>
-  </div>
-
-  <ul>
-    <li th:each="ty : ${allTypes}">
-      <input type="radio" th:field="*{type}" th:value="${ty}" />
-      <label th:for="${#ids.prev('type')}" th:text="#{${'seedstarter.type.' + ty}}">Wireframe</label>
-    </li>
-  </ul>
-
-  <div>
-    <label >Море
-      <input type="checkbox" th:field="*{isPresentSea}" name="isPresentSea" th:value="true" />
-    </label>
-  </div>
-
   <div><input type="submit" value="Добавить"/></div>
 </form>
 </body>

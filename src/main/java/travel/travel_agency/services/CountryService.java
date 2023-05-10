@@ -18,7 +18,8 @@ import java.util.List;
 public class CountryService {
     private final CountryRepository repository;
     public void saveNewCountry(Country country){
-        repository.save(country);
+        if (repository.findByName(country.getName()) == null)
+            repository.save(country);
         log.info("New country was saved {}",country);
     }
     public void deleteAll(){

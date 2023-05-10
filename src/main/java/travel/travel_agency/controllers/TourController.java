@@ -15,16 +15,24 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 public class TourController {
+
     private final TourService tourService;
     private final CityService cityService;
     private final CountryService countryService;
-    @GetMapping("/tour/all")
+
+    @GetMapping("/tours/all")
     public List<Tour> findAll() {
         return tourService.findAll();
     }
-    @DeleteMapping("/tour/all")
-    public void deleteAll() {
+    @GetMapping("/tours/delete/all")
+    public ModelAndView deleteAll() {
         tourService.deleteAll();
+        return new ModelAndView(new RedirectView("/admin"));
+    }
+    @GetMapping("/tour/delete/{id}")
+    public ModelAndView deleteOne(@PathVariable String id) {
+        tourService.deleteOne(Integer.parseInt(id));
+        return new ModelAndView(new RedirectView("/admin"));
     }
     @GetMapping("/tour/oneByBought")
     public List<Tour> findAllByBought(@ModelAttribute User user) {
@@ -37,10 +45,10 @@ public class TourController {
         model.addAttribute("tour", tour);
         return new ModelAndView("/new_tour_form");
     }
+
     @PostConstruct
     public void addTours(){
-
-        Tour tour = new Tour(true, TypeOfBeach.Sand , 1450, new Date(), new Date(), new City("nameOfCity", new Country("nameOfCountry")));
+        Tour tour = new Tour(1450, new Date(), new Date(), new City("nameOfCity", new Country("nameOfCountry")));
         countryService.saveNewCountry(tour.getCity().getCountry());
         cityService.saveNewCity(tour.getCity());
         tourService.saveNewTour(tour);
@@ -51,7 +59,6 @@ public class TourController {
         try {
             countryService.saveNewCountry(tour.getCity().getCountry());
             cityService.saveNewCity(tour.getCity());
-
             tourService.saveNewTour(tour);
             return new ModelAndView(new RedirectView("/admin"));
         } catch (Exception e) {
@@ -60,17 +67,12 @@ public class TourController {
 
     }
     @GetMapping("/tour/oneByPrice")
-    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
-            (Date dateFrom, Date dateTo, City city, boolean presentSea, Integer price){
+    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan
+            (Date dateFrom, Date dateTo, City city, Integer price){
         return tourService.findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
-                (dateFrom, dateTo, city, presentSea, price);
+                (dateFrom, dateTo, city, price);
     }
-    @GetMapping("/tour/oneBySea")
-    public List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSea
-            (@ModelAttribute Date dateFrom,@ModelAttribute Date dateTo,@ModelAttribute City city,@ModelAttribute boolean presentSea){
-        return tourService.findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSea
-                (dateFrom, dateTo, city, presentSea);
-    }
+
     @GetMapping("/tour/oneByCity")
     public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains
             (@ModelAttribute Date dateFrom,@ModelAttribute Date dateTo,@ModelAttribute City city){

@@ -3,6 +3,7 @@ package travel.travel_agency.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -29,24 +30,13 @@ public class SecurityConfig{
                 .cors().disable()
                 .authorizeHttpRequests()
                 .requestMatchers("/registration").permitAll()
-                .requestMatchers("/profile").hasAnyAuthority("USER", "ADMIN")
-                .requestMatchers("/all_tour").hasAuthority("USER")
-                .requestMatchers( "/new_tour_form","/admin").hasAuthority("ADMIN")
-                //Доступ разрешен всем пользователей
-                //.requestMatchers("/").permitAll()
-                //Все остальные страницы требуют аутентификации
+                .requestMatchers("/profile","/buy_new_tour/**","/buy_new_tour")
+                .hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().hasAuthority("ADMIN")
                 .and()
-                //Настройка для входа в систему
                 .formLogin()
-                //.loginPage("/login")
-                //Перенарпавление на главную страницу после успешного входа
                 .defaultSuccessUrl("/profile",true)
                 .and()
-                //.sessionManagement()
-                //.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                //.and()
-                //.authenticationProvider(authProvider())
                 .logout()
                 .logoutUrl("/logout");
         return http.build();

@@ -5,7 +5,31 @@
     <title>Профиль</title>
 </head>
 <body>
-<span> Доброе утро, <span th:text="${user.name} + '!' "/></span>
+<span> Доброе утро, <span th:text="${user.name}"></span></span>
+<a th:href="buy_new_tour"><button>Купить</button></a>
+<a href="/logout"><button>Выход</button></a>
+<table>
+    <thead>
+    <tr>
+        <td>№</td>
+        <td>Начало</td>
+        <td>Окончание</td>
+        <td>Город</td>
+        <td>Страна</td>
+        <td>Цена</td>
+    </tr>
+    </thead>
 
+    <tbody>
+    <tr th:each="tour: ${tours}">
+        <td th:text="${tour.id}"></td>
+        <td th:text="${tour.dateFrom}"></td>
+        <td th:text="${tour.dateTo}"></td>
+        <td th:text="${tour.city.name}"></td>
+        <td th:text="${tour.city.country.name}"></td>
+        <td th:text="${tour.price}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>

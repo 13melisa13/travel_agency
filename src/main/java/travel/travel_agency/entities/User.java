@@ -1,5 +1,6 @@
 package travel.travel_agency.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.List;
 
 //@Data
+@ToString
 @Getter
 @Setter
 @Builder
@@ -25,9 +27,11 @@ public class User implements UserDetails {
     private String name;
     private String lastname;
     private String documentData;
-
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "boughtBy")
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "boughtBy")
     public List<Tour> tours;
+    @ToString.Include
     @Column(unique = true)
     private String email;
     private String password;
@@ -73,34 +77,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String toString() {
-        if(tours == null) {
-            return "User{" +
-                    "id=" + id +
-                    ", surname='" + surname + '\'' +
-                    ", name='" + name + '\'' +
-                    ", lastname='" + lastname + '\'' +
-                    ", documentData='" + documentData + '\'' +
-                   ", email='" + email + '\'' +
-                    ", password='" + password + '\'' +
-                    ", role=" + role +
-                    '}';
-        } else {
-            return "User{" +
-                    "id=" + id +
-                    ", surname='" + surname + '\'' +
-                    ", name='" + name + '\'' +
-                    ", lastname='" + lastname + '\'' +
-                    ", documentData='" + documentData + '\'' +
-                    ", tours=" + tours + '\'' +
-                    ", email='" + email + '\'' +
-                    ", password='" + password + '\'' +
-                    ", role=" + role +
-                    '}';
-
-        }
     }
 }

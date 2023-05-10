@@ -5,8 +5,12 @@
     <title>Админ</title>
 </head>
 <body>
-<span> Доброе утро, <span th:text="${user.name} + '!' "></span></span>
-<a th:href="new_tour_form">Добавить</a>
+<span> Доброе утро, <span th:text="${user.name}  "></span></span>
+<form th:action="@{/tours/delete/all}">
+    <input type="submit" value="Удалить" />
+</form>
+<a th:href="new_tour_form"><button>Добавить</button></a>
+<a href="/logout"><button>Выход</button></a>
     <table>
         <thead>
             <tr>
@@ -15,8 +19,8 @@
                 <td>Окончание</td>
                 <td>Город</td>
                 <td>Страна</td>
-                <td>Море</td>
                 <td>Цена</td>
+                <td>Куплен</td>
             </tr>
         </thead>
         <tbody>
@@ -26,8 +30,16 @@
                 <td th:text="${tour.dateTo}"></td>
                 <td th:text="${tour.city.name}"></td>
                 <td th:text="${tour.city.country.name}"></td>
-                <td th:text="${tour.isPresentSea}"></td>
                 <td th:text="${tour.price}"></td>
+                <td>
+                    <span th:if="${tour.boughtBy == null}">-</span>
+                    <span th:unless="${tour.boughtBy == null}" th:text="${tour.boughtBy.id}" ></span>
+                </td>
+                <td>
+                    <form th:action="@{/tour/delete/{id}(id=${tour.id})}">
+                        <input type="submit" value="Удалить" />
+                    </form>
+                </td>
             </tr>
         </tbody>
     </table>

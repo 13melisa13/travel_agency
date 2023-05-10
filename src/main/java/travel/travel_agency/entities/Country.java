@@ -7,9 +7,8 @@ import lombok.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-@Getter
 @ToString
+@Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,27 +19,12 @@ public class Country {
     @GeneratedValue
     private Integer id;
     private String name;
-//    @JsonIgnore
-//    @ToString.Include
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "country")
+    @JsonIgnore
+    @ToString.Exclude
+    @OneToMany(mappedBy = "country")
     private List<City> cities;
-
-
-
     public Country(String name) {
         this.name = name;
     }
-//    @Override
-//    public String toString() {
-//        if (cities != null)
-//        return "Country{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                ", cities=" + cities +
-//                '}';
-//        else return "Country{" +
-//                "id=" + id +
-//                ", name='" + name + '\'' +
-//                "}";
-//    }
+
 }
