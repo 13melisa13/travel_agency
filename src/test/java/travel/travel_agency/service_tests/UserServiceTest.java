@@ -7,6 +7,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import travel.travel_agency.entities.Role;
 import travel.travel_agency.entities.User;
+import travel.travel_agency.repositories.TourRepository;
 import travel.travel_agency.repositories.UserRepository;
 import travel.travel_agency.services.UserService;
 
@@ -17,6 +18,8 @@ public class UserServiceTest {
     @Mock
     private UserRepository userRepository;
     @Mock
+    private TourRepository tourRepository;
+    @Mock
     private BCryptPasswordEncoder encoder;
     @Captor
     private ArgumentCaptor<User> captor;
@@ -25,7 +28,7 @@ public class UserServiceTest {
         User user1 = new User("email1", "password1", Role.USER);
         User user2 = new User("email2", "password2", Role.USER);
         User user3 = new User("email3", "password3", Role.USER);
-        UserService userService = new UserService(encoder,userRepository);
+        UserService userService = new UserService(encoder,userRepository, tourRepository);
         userService.saveUser(user1);
         userService.saveUser(user2);
         userService.saveUser(user3);
@@ -36,7 +39,7 @@ public class UserServiceTest {
     @Test
     public void saveUser() {
         User user = new User("email1", "password1", Role.USER);
-        UserService userService = new UserService(encoder,userRepository);
+        UserService userService = new UserService(encoder,userRepository, tourRepository);
         Mockito.when(encoder.encode(user.getPassword())).thenReturn("password");
         userService.saveUser(user);
         Mockito.verify(userRepository).save(captor.capture());
@@ -51,7 +54,7 @@ public class UserServiceTest {
     public void loadUserByUsername(){
         User user1 = new User("email1", "", Role.USER);
         Mockito.when(userRepository.findByEmail(user1.getEmail())).thenReturn(user1);
-        UserService userService = new UserService(encoder,userRepository);
+        UserService userService = new UserService(encoder,userRepository, tourRepository);
         Assertions.assertEquals(user1,userService.loadUserByUsername(user1.getUsername()));
     }
 }

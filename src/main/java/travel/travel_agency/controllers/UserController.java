@@ -19,6 +19,7 @@ import travel.travel_agency.services.TourService;
 import travel.travel_agency.services.UserService;
 
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -90,6 +91,7 @@ public class UserController {
         model.addAttribute("tours", tourService.findAllByBought(null));
         return new ModelAndView("/buy_new_tour");
     }
+
     @ModelAttribute
     @PostMapping("/buy_new_tour/{id}")
     public ModelAndView buyNewTourPost(@PathVariable String id) {
@@ -106,7 +108,6 @@ public class UserController {
         service.saveUser(admin);
         User user = new User("user@user", "user",Role.USER);
         user.setName("USER");
-
         Country country = new Country("newCountry");
         countryService.saveNewCountry(country);
         City city = new City("newCity",country);

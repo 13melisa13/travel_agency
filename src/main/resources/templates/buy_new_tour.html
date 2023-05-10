@@ -15,6 +15,10 @@
 <!--        <td><span><label> С <input type="date" name="dateFrom" th:field="${dateFrom}"/> </label></span>-->
 <!--            <span><label> По <input type="date" name="dateTo" th:field="${dateTo}"/> </label></span>-->
 <!--        </td>-->
+<!--        <td th:each="parameter : ${listOfParameters}">-->
+<!--            <input type="checkbox" th:field="${parameter}" th:value="${color}"/>-->
+<!--        <label th:for="${#ids.prev('parameter')}" th:text="${parameter}"></label>-->
+<!--        </td>-->
 <!--    </tr>-->
 <!--    <tr>-->
 <!--        <td>-->
@@ -36,6 +40,7 @@
 
 <!--    </table>-->
 <!--</form>-->
+<table>
         <thead>
             <tr>
                 <td>Начало</td>
