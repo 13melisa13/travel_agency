@@ -29,9 +29,12 @@ public class TourService {
         repository.deleteById(id);
         log.info("Tours was deleted");
     }
-    public void findOne(Integer id){
-        repository.findById(id);
-        log.info("Tours was deleted");
+    public Tour findOne(Integer id){
+        if (repository.findById(id).isPresent())
+            log.info("Tour was found");
+        else
+            log.info("Tour wasn't found");
+        return repository.findTourById(id);
     }
     public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
             (Date dateFrom, Date dateTo, City city, Integer price){

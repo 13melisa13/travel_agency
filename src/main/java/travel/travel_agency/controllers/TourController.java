@@ -29,9 +29,20 @@ public class TourController {
         tourService.deleteAll();
         return new ModelAndView(new RedirectView("/admin"));
     }
-    @GetMapping("/tour/delete/{id}")
-    public ModelAndView deleteOne(@PathVariable String id) {
-        tourService.deleteOne(Integer.parseInt(id));
+//    @GetMapping("/tour/delete/{id}")
+//    public ModelAndView deleteOne(@PathVariable String id) {
+//        tourService.deleteOne(Integer.parseInt(id));
+//        return new ModelAndView(new RedirectView("/admin"));
+//    }
+    @PostMapping("/tours/delete")
+    public ModelAndView deleteSome(@RequestParam(value = "checked", required = false) int[]checked) {
+        if(checked != null) {
+            for (int j : checked) {
+                if (tourService.findOne(j) != null) {
+                    tourService.deleteOne(j);
+                }
+            }
+        }
         return new ModelAndView(new RedirectView("/admin"));
     }
     @GetMapping("/tour/oneByBought")
@@ -54,8 +65,7 @@ public class TourController {
         tourService.saveNewTour(tour);
     }
     @PostMapping("/new_tour_form")
-    public ModelAndView newTourFormPost(@ModelAttribute("tour") Tour tour,
-                                        Model model){
+    public ModelAndView newTourFormPost(@ModelAttribute("tour") Tour tour){
         try {
             countryService.saveNewCountry(tour.getCity().getCountry());
             cityService.saveNewCity(tour.getCity());

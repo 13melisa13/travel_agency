@@ -53,9 +53,9 @@
             </tr>
         </thead>
         <tbody>
-        <form th:action="@{/buy_new_tour/{id}(id=${tour.id})}" th:method="post" >
-        <tr th:each="one: ${map}">
-            <td><input type="checkbox" th:text="${tour.id}" th:value="true"/></td>
+        <form th:action="@{/buy_new_tour}" th:method="post" >
+        <tr th:each="tour: ${tours}">
+            <td><input type="checkbox" name="checked" th:value="${tour.id}"/></td>
             <td th:text="${tour.dateFrom}"></td>
                             <td th:text="${tour.dateTo}"></td>
                             <td th:text="${tour.city.name}"></td>

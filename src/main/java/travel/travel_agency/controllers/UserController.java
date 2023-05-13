@@ -2,11 +2,9 @@ package travel.travel_agency.controllers;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,11 +15,7 @@ import travel.travel_agency.services.CityService;
 import travel.travel_agency.services.CountryService;
 import travel.travel_agency.services.TourService;
 import travel.travel_agency.services.UserService;
-
 import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -53,6 +47,7 @@ public class UserController {
         }
     }
 
+/*
     @GetMapping("/login")
     @ModelAttribute
     public ModelAndView login(Model model) {
@@ -61,6 +56,7 @@ public class UserController {
         return new ModelAndView("/login");
 
     }
+*/
 
     @GetMapping("/profile")
     @ModelAttribute
@@ -91,22 +87,31 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.loadUser(authentication.getName());
         model.addAttribute("user", user);
-//        Map<Tour, Boolean> map = new HashMap<>();
-//        for (int i = 0; i < tourService.findAllByBought(null).size(); i++) {
-//            map.put(tourService.findAllByBought(null).get(i), false);
-//        }
-//        model.addAttribute("map", map);
+/*
+        Map<Tour, Boolean> map = new HashMap<>();
+        for (int i = 0; i < tourService.findAllByBought(null).size(); i++) {
+            map.put(tourService.findAllByBought(null).get(i), false);
+        }
+        model.addAttribute("map", map);
+*/
 
         model.addAttribute("tours", tourService.findAllByBought(null));
         return new ModelAndView("/buy_new_tour");
     }
 
     @ModelAttribute
-    @PostMapping("/buy_new_tour/{id}")
-    public ModelAndView buyNewTourPost(@PathVariable String id) {
+    @PostMapping("/buy_new_tour")
+    public ModelAndView buyNewTourPost(
+            @RequestParam(value = "checked", required = false) int[]checked) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.loadUser(authentication.getName());
-        service.boughtTourById(Integer.parseInt(id), user.getId() );
+        if(checked != null) {
+            for (int j : checked) {
+                if (tourService.findOne(j) != null) {
+                    service.boughtTourById(j, user.getId());
+                }
+            }
+        }
         return new ModelAndView(new RedirectView("/buy_new_tour"));
     }
 
