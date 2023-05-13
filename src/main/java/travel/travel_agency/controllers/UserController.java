@@ -19,7 +19,9 @@ import travel.travel_agency.services.TourService;
 import travel.travel_agency.services.UserService;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Slf4j
@@ -79,6 +81,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("user", service.loadUserByUsername(authentication.getName()));
         model.addAttribute("tours", tourService.findAll());
+
         return new ModelAndView("/admin");
     }
 
@@ -88,6 +91,12 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.loadUser(authentication.getName());
         model.addAttribute("user", user);
+//        Map<Tour, Boolean> map = new HashMap<>();
+//        for (int i = 0; i < tourService.findAllByBought(null).size(); i++) {
+//            map.put(tourService.findAllByBought(null).get(i), false);
+//        }
+//        model.addAttribute("map", map);
+
         model.addAttribute("tours", tourService.findAllByBought(null));
         return new ModelAndView("/buy_new_tour");
     }

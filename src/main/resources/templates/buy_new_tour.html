@@ -40,9 +40,10 @@
 
 <!--    </table>-->
 <!--</form>-->
+
 <table>
         <thead>
-            <tr>
+            <tr><td></td>
                 <td>Начало</td>
                 <td>Окончание</td>
                 <td>Город</td>
@@ -52,20 +53,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr th:each="tour: ${tours}">
-                <td th:text="${tour.dateFrom}"></td>
-                <td th:text="${tour.dateTo}"></td>
-                <td th:text="${tour.city.name}"></td>
-                <td th:text="${tour.city.country.name}"></td>
-                <td th:text="${tour.price}"></td>
-                <td>
-                    <form th:action="@{/buy_new_tour/{id}(id=${tour.id})}" th:method="post" >
-                        <input type="submit" value="Купить" />
-                    </form>
-                </td>
+        <form th:action="@{/buy_new_tour/{id}(id=${tour.id})}" th:method="post" >
+        <tr th:each="one: ${map}">
+            <td><input type="checkbox" th:text="${tour.id}" th:value="true"/></td>
+            <td th:text="${tour.dateFrom}"></td>
+                            <td th:text="${tour.dateTo}"></td>
+                            <td th:text="${tour.city.name}"></td>
+                            <td th:text="${tour.city.country.name}"></td>
+                            <td th:text="${tour.price}"></td>
             </tr>
+            <input type="submit" value="Купить" />
+            </form>
         </tbody>
     </table>
-
 </body>
 </html>
