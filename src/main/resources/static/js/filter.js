@@ -1,10 +1,11 @@
-var tours = /*[[${tours}]]*/ [];
+
     $( function() {
         
         
         let maxPriceTour, minPriceTour;
+        console.log(tours)
         for (let tour of tours) {
-            
+
             if (maxPriceTour == null || parseInt(tour['price']) > parseInt(maxPriceTour['price'])){
                 maxPriceTour = tour;
             }
