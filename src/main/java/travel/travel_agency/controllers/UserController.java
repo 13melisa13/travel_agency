@@ -2,6 +2,7 @@ package travel.travel_agency.controllers;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -90,14 +91,20 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.loadUser(authentication.getName());
         model.addAttribute("user", user);
-
         model.addAttribute("maxPrice", tourService.maxPrice());
         model.addAttribute("minPrice", tourService.minPrice());
         List <Tour> tours = tourService.findAllByBought(null);
-        //String jsonTour = new ObjectMapper().writeValueAsString(tours);
         ModelAndView modelAndView = new ModelAndView("/buy_new_tour");
-        //modelAndView.addObject("tours", jsonTour );
-        model.addAttribute("tours", tours);
+
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+        String someJsonString = mapper.writeValueAsString(tours);
+        List <Tour> toursJson  = mapper.readValue(someJsonString, List.class);
+
+
+
+
+        model.addAttribute("tours", toursJson);
         return modelAndView;
     }
 
@@ -131,7 +138,9 @@ public class UserController {
         City city = new City("newCity",country);
         cityService.saveNewCity(city);
         Tour tour = new Tour(1460, new Date(), new Date(), city);
+        tourService.saveNewTour(new Tour(1260, new Date(), new Date(), city));
         tourService.saveNewTour(tour);
+        tourService.saveNewTour(new Tour(1500, new Date(), new Date(), city));
         service.saveUser(user);
         service.boughtTourById(tour.getId(),user.getId());
 
