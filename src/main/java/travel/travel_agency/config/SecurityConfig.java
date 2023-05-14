@@ -26,7 +26,7 @@ public class SecurityConfig{
                 .csrf().disable()
                 .cors().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/registration",  "/**.js").permitAll()
+                .requestMatchers("/registration", "/static/**").permitAll()
                 .requestMatchers("/profile","/buy_new_tour/**","/buy_new_tour")
                 .hasAnyAuthority("USER", "ADMIN")
                 .anyRequest().hasAuthority("ADMIN")
