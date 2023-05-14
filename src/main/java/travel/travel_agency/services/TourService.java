@@ -11,6 +11,8 @@ import travel.travel_agency.repositories.TourRepository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
+
 @Slf4j
 @Service
 @Transactional
@@ -36,12 +38,12 @@ public class TourService {
             log.info("Tour wasn't found");
         return repository.findTourById(id);
     }
-    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
-            (Date dateFrom, Date dateTo, City city, Integer price){
-        log.info("All tours were found");
-        return repository.findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan
-                (dateFrom, dateTo, city, price);
-    }
+//    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
+//            (Date dateFrom, Date dateTo, City city, Integer price){
+//        log.info("All tours were found");
+//        return repository.findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan
+//                (dateFrom, dateTo, city, price);
+//    }
 
 //    public List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSea
 //            (Date dateFrom, Date dateTo, City city, boolean presentSea){
@@ -49,23 +51,36 @@ public class TourService {
 //        return repository.findByDateFromAfterAndDateToBeforeAndCityContainsAndIsPresentSea
 //                (dateFrom, dateTo, city, presentSea);
 //    }
-    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains
-            (Date dateFrom, Date dateTo, City city){
-        log.info("All tours were found");
-        return repository.findByDateFromAfterAndDateToBeforeAndCityContains(dateFrom, dateTo, city);
-    }
-    public  List<Tour> findByDateFromAfterAndDateToBefore
-            (Date dateFrom, Date dateTo){
-        log.info("All tours were found");
-        return repository.findByDateFromAfterAndDateToBefore(dateFrom, dateTo);
-    }
+//    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains
+//            (Date dateFrom, Date dateTo, City city){
+//        log.info("All tours were found");
+//        return repository.findByDateFromAfterAndDateToBeforeAndCityContains(dateFrom, dateTo, city);
+//    }
+//    public  List<Tour> findByDateFromAfterAndDateToBefore
+//            (Date dateFrom, Date dateTo){
+//        log.info("All tours were found");
+//        return repository.findByDateFromAfterAndDateToBefore(dateFrom, dateTo);
+//    }
     public List<Tour> findAll(){
         log.info("All countries were found");
         return (List<Tour>) repository.findAll();
     }
+
     public List<Tour> findAllByBought(User user){
         log.info("All countries were found");
         return (List<Tour>) repository.findAllByBoughtBy(user);
     }
 
+    public Integer maxPrice(){
+        return repository.findFirstByOrderByPriceDesc().getPrice();
+    }
+    public Integer minPrice(){
+        return repository.findFirstByOrderByPrice().getPrice();
+    }
+//    //public Date maxDate(){
+//        return repository.findFirstByOrderByDateFrom().getDateFrom();
+//    }
+//    public Date minDate(){
+//        return repository.findTopByOrderByDateTo().getDateTo();
+//    }
 }

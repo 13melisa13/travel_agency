@@ -5,45 +5,49 @@
     <title>Купить тур</title>
 </head>
 <body>
+
 <span> Доброе утро, <span th:text="${user.name}  "></span></span>
 <a href="/profile"><button>Профиль</button></a>
 <a href="/logout"><button>Выход</button></a>
 
-<!--<form>-->
-<!--    <table>-->
-<!--    <tr>-->
-<!--        <td><span><label> С <input type="date" name="dateFrom" th:field="${dateFrom}"/> </label></span>-->
-<!--            <span><label> По <input type="date" name="dateTo" th:field="${dateTo}"/> </label></span>-->
-<!--        </td>-->
-<!--        <td th:each="parameter : ${listOfParameters}">-->
-<!--            <input type="checkbox" th:field="${parameter}" th:value="${color}"/>-->
-<!--        <label th:for="${#ids.prev('parameter')}" th:text="${parameter}"></label>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <td>-->
-<!--            <span><label> От <input type="text" name="priceFrom" th:field="${priceFrom}"/> </label></span>-->
-<!--            <span><label> До <input type="text" name="priceTo" th:field="${priceTo}"/> </label></span>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--    <tr>-->
-<!--        <td>-->
-<!--            <span><label>Город<input type="text" name="city" th:field="${city}"/> </label></span>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--        <tr>-->
-<!--            <td>-->
-
-<!--            </td>-->
-<!--        </tr>-->
-
-
-<!--    </table>-->
-<!--</form>-->
+<!--<form th:action="@{/buy_new_tour}" th:method="post">-->
+<!--    -->
+<!--    <input type="submit" value="Применить">-->
+<!--&lt;!&ndash;    <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td><span><label> С <input type="date" th:value="${minDate}" th:field="${minDate}"/> </label></span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span><label> По <input type="date" th:value="${maxDate}" th:field="${maxDate}"/> </label></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;    </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;    <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span><label> От <input type="text"  th:value="${minPrice}"/> </label></span>&ndash;&gt;-->
+<!--&lt;!&ndash;            <span><label> До <input type="text"  th:value="${maxPrice}"/> </label></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;    </tr>&ndash;&gt;-->
+<!--        -->
+<!--&lt;!&ndash;    <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;        <td>&ndash;&gt;-->
+<!--&lt;!&ndash;&lt;!&ndash;            option &ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;            <span><label>Город<input type="text" name="city" th:field="${city}"/> </label></span>&ndash;&gt;-->
+<!--&lt;!&ndash;        </td>&ndash;&gt;-->
+<!--&lt;!&ndash;    </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;      <tr>&ndash;&gt;-->
+<!--&lt;!&ndash;          <td>&ndash;&gt;-->
+<!--              -->
+<!--&lt;!&ndash;          </td>&ndash;&gt;-->
+<!--&lt;!&ndash;      </tr>&ndash;&gt;-->
+<!--&lt;!&ndash;    </table>&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+<!--<section class="range-slider">-->
+<!--    <span class="rangeValues"></span>-->
+<!--    <input value="5" min="0" max="15" step="0.5" type="range">-->
+<!--    <input value="10" min="0" max="15" step="0.5" type="range">-->
+<!--&lt;!&ndash;</section>&ndash;&gt;-->
+<input type="range" id="priceRange" onclick="console.log(this.value);">
 
 <table>
         <thead>
-            <tr><td></td>
+            <tr><td><input type="checkbox" onclick="toggle(this)"/></td>
                 <td>Начало</td>
                 <td>Окончание</td>
                 <td>Город</td>
@@ -66,5 +70,17 @@
             </form>
         </tbody>
     </table>
+
+<script th:inline="javascript">
+    //console.log(document.getElementById("priceRange").value)
+    document.getElementById("priceRange").max=[[${maxPrice}]];
+    document.getElementById("priceRange").min=[[${minPrice}]];
+    function toggle(source) {
+        let checkboxes = document.getElementsByName("checked");
+        for(let i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
 </body>
 </html>

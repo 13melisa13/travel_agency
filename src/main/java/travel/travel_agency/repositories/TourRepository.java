@@ -1,5 +1,6 @@
 package travel.travel_agency.repositories;
 
+import org.springframework.data.jdbc.repository.query.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import travel.travel_agency.entities.City;
@@ -13,9 +14,12 @@ import java.util.List;
 public interface TourRepository extends CrudRepository<Tour,Integer> {
     Tour findTourById(Integer id);
     List<Tour> findAllByBoughtBy(User user);
-    List<Tour> findByDateFromAfterAndDateToBefore(Date dateFrom, Date dateTo);
-    List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains(Date dateFrom, Date dateTo, City city);
-    List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan(Date dateFrom, Date dateTo, City city, Integer price);
-
+   // List<Tour> findByBoughtByAndByDateFromAfterAndDateToBefore(Date dateFrom, Date dateTo);
+  //  List<Tour> findByBoughtByAndByDateFromAfterAndDateToBeforeAndCityContains(Date dateFrom, Date dateTo, City city);
+   // List<Tour> findByBoughtByAndByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan(Date dateFrom, Date dateTo, City city, Integer price);
+    Tour findFirstByOrderByPrice();
+    Tour findFirstByOrderByPriceDesc();
+   // Tour findByBoughtByAndTopByOrderByDateTo();
+   // Tour findByBoughtByAndFirstByOrderByDateFrom();
 
 }

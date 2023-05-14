@@ -11,7 +11,7 @@
 <table>
     <thead>
     <tr>
-        <td>№</td>
+
         <td>Начало</td>
         <td>Окончание</td>
         <td>Город</td>
@@ -22,7 +22,7 @@
 
     <tbody>
     <tr th:each="tour: ${tours}">
-        <td th:text="${tour.id}"></td>
+        
         <td th:text="${tour.dateFrom}"></td>
         <td th:text="${tour.dateTo}"></td>
         <td th:text="${tour.city.name}"></td>

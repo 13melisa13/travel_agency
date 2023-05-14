@@ -87,21 +87,19 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.loadUser(authentication.getName());
         model.addAttribute("user", user);
-/*
-        Map<Tour, Boolean> map = new HashMap<>();
-        for (int i = 0; i < tourService.findAllByBought(null).size(); i++) {
-            map.put(tourService.findAllByBought(null).get(i), false);
-        }
-        model.addAttribute("map", map);
-*/
-
+        model.addAttribute("cities", cityService.findAllByOrderByName());
+        model.addAttribute("maxPrice", tourService.maxPrice());
+        model.addAttribute("minPrice", tourService.minPrice());
+        //model.addAttribute("maxDate", tourService.maxDate());
+        //model.addAttribute("maxDate", tourService.minDate());
         model.addAttribute("tours", tourService.findAllByBought(null));
         return new ModelAndView("/buy_new_tour");
     }
 
-    @ModelAttribute
     @PostMapping("/buy_new_tour")
     public ModelAndView buyNewTourPost(
+            @ModelAttribute("maxPrice") Integer max,
+            @ModelAttribute("minPrice") Integer min,
             @RequestParam(value = "checked", required = false) int[]checked) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.loadUser(authentication.getName());
@@ -112,6 +110,7 @@ public class UserController {
                 }
             }
         }
+
         return new ModelAndView(new RedirectView("/buy_new_tour"));
     }
 

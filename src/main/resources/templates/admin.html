@@ -14,7 +14,7 @@
     <table>
         <thead>
             <tr>
-                <td><input type="checkbox" name="checker"></td>
+                <td><input type="checkbox" onclick="toggle(this)"></td>
                 <td>Начало</td>
                 <td>Окончание</td>
                 <td>Город</td>
@@ -42,6 +42,13 @@
         </form>
         </tbody>
     </table>
-
+<script>
+    function toggle(source) {
+        let checkboxes = document.getElementsByName("checked");
+        for(let i=0, n=checkboxes.length;i<n;i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>
 </body>
 </html>

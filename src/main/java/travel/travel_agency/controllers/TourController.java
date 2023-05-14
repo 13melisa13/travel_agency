@@ -76,21 +76,21 @@ public class TourController {
         }
 
     }
-    @GetMapping("/tour/oneByPrice")
-    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan
-            (Date dateFrom, Date dateTo, City city, Integer price){
-        return tourService.findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
-                (dateFrom, dateTo, city, price);
-    }
-
-    @GetMapping("/tour/oneByCity")
-    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains
-            (@ModelAttribute Date dateFrom,@ModelAttribute Date dateTo,@ModelAttribute City city){
-        return tourService.findByDateFromAfterAndDateToBeforeAndCityContains(dateFrom, dateTo, city);
-    }
-    @GetMapping("/tour/oneByDate")
-    public  List<Tour> findByDateFromAfterAndDateToBefore
-            (@ModelAttribute Date dateFrom,@ModelAttribute Date dateTo){
-        return tourService.findByDateFromAfterAndDateToBefore(dateFrom, dateTo);
-    }
+//    @GetMapping("/tour/oneByPrice")
+//    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContainsAndPriceLessThan
+//            (Date dateFrom, Date dateTo, City city, Integer price){
+//        return tourService.findByDateFromAfterAndDateToBeforeAndCityContainsAndPresentSeaAndPriceLessThan
+//                (dateFrom, dateTo, city, price);
+//    }
+//
+//    @GetMapping("/tour/oneByCity")
+//    public  List<Tour> findByDateFromAfterAndDateToBeforeAndCityContains
+//            (@ModelAttribute Date dateFrom,@ModelAttribute Date dateTo,@ModelAttribute City city){
+//        return tourService.findByDateFromAfterAndDateToBeforeAndCityContains(dateFrom, dateTo, city);
+//    }
+//    @GetMapping("/tour/oneByDate")
+//    public  List<Tour> findByDateFromAfterAndDateToBefore
+//            (@ModelAttribute Date dateFrom,@ModelAttribute Date dateTo){
+//        return tourService.findByDateFromAfterAndDateToBefore(dateFrom, dateTo);
+//    }
 }
