@@ -3,48 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Купить тур</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+  <script th:inline="javascript">
+    $( function() {
+        
+      $( "#slider-range" ).slider({
+        range: true,
+        min: [[${minPrice}]],
+        max: [[${maxPrice}]],
+        values: [ [[${minPrice}]], [[${maxPrice}]] ],
+        slide: function( event, ui ) {
+          $( "#amount" ).val( "$" + ui.values[ 0 ] + " - $" + ui.values[ 1 ] );
+        }
+      });
+      $( "#amount" ).val( "$" + $( "#slider-range" ).slider( "values", 0 ) +
+        " - $" + $( "#slider-range" ).slider( "values", 1 ) );
+    } );
+    </script>
 </head>
 <body>
 
 <span> Доброе утро, <span th:text="${user.name}  "></span></span>
 <a href="/profile"><button>Профиль</button></a>
 <a href="/logout"><button>Выход</button></a>
-
-<!--<form th:action="@{/buy_new_tour}" th:method="post">-->
-<!--    -->
-<!--    <input type="submit" value="Применить">-->
-<!--&lt;!&ndash;    <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;        <td><span><label> С <input type="date" th:value="${minDate}" th:field="${minDate}"/> </label></span>&ndash;&gt;-->
-<!--&lt;!&ndash;            <span><label> По <input type="date" th:value="${maxDate}" th:field="${maxDate}"/> </label></span>&ndash;&gt;-->
-<!--&lt;!&ndash;        </td>&ndash;&gt;-->
-<!--&lt;!&ndash;    </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;    <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;        <td>&ndash;&gt;-->
-<!--&lt;!&ndash;            <span><label> От <input type="text"  th:value="${minPrice}"/> </label></span>&ndash;&gt;-->
-<!--&lt;!&ndash;            <span><label> До <input type="text"  th:value="${maxPrice}"/> </label></span>&ndash;&gt;-->
-<!--&lt;!&ndash;        </td>&ndash;&gt;-->
-<!--&lt;!&ndash;    </tr>&ndash;&gt;-->
-<!--        -->
-<!--&lt;!&ndash;    <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;        <td>&ndash;&gt;-->
-<!--&lt;!&ndash;&lt;!&ndash;            option &ndash;&gt;&ndash;&gt;-->
-<!--&lt;!&ndash;            <span><label>Город<input type="text" name="city" th:field="${city}"/> </label></span>&ndash;&gt;-->
-<!--&lt;!&ndash;        </td>&ndash;&gt;-->
-<!--&lt;!&ndash;    </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;      <tr>&ndash;&gt;-->
-<!--&lt;!&ndash;          <td>&ndash;&gt;-->
-<!--              -->
-<!--&lt;!&ndash;          </td>&ndash;&gt;-->
-<!--&lt;!&ndash;      </tr>&ndash;&gt;-->
-<!--&lt;!&ndash;    </table>&ndash;&gt;-->
-<!--&lt;!&ndash;</form>&ndash;&gt;-->
-<!--<section class="range-slider">-->
-<!--    <span class="rangeValues"></span>-->
-<!--    <input value="5" min="0" max="15" step="0.5" type="range">-->
-<!--    <input value="10" min="0" max="15" step="0.5" type="range">-->
-<!--&lt;!&ndash;</section>&ndash;&gt;-->
-<input type="range" id="priceRange" onclick="console.log(this.value);">
-
+<div>
+    <p>
+        <label for="amount">Price range:</label>
+        <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+      </p>
+       
+      <div id="slider-range"></div>
+</div>
 <table>
         <thead>
             <tr><td><input type="checkbox" onclick="toggle(this)"/></td>
@@ -65,6 +57,7 @@
                             <td th:text="${tour.city.name}"></td>
                             <td th:text="${tour.city.country.name}"></td>
                             <td th:text="${tour.price}"></td>
+                            <!-- <script></script> -->
             </tr>
             <input type="submit" value="Купить" />
             </form>
@@ -72,9 +65,7 @@
     </table>
 
 <script th:inline="javascript">
-    //console.log(document.getElementById("priceRange").value)
-    document.getElementById("priceRange").max=[[${maxPrice}]];
-    document.getElementById("priceRange").min=[[${minPrice}]];
+    
     function toggle(source) {
         let checkboxes = document.getElementsByName("checked");
         for(let i=0, n=checkboxes.length;i<n;i++) {

@@ -1,5 +1,7 @@
 package travel.travel_agency.controllers;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +18,7 @@ import travel.travel_agency.services.CountryService;
 import travel.travel_agency.services.TourService;
 import travel.travel_agency.services.UserService;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @Slf4j
@@ -83,17 +86,19 @@ public class UserController {
 
     @ModelAttribute
     @GetMapping("/buy_new_tour")
-    public ModelAndView buyNewTourGet(Model model){
+    public ModelAndView buyNewTourGet(Model model) throws JsonProcessingException {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         User user = service.loadUser(authentication.getName());
         model.addAttribute("user", user);
-        model.addAttribute("cities", cityService.findAllByOrderByName());
+
         model.addAttribute("maxPrice", tourService.maxPrice());
         model.addAttribute("minPrice", tourService.minPrice());
-        //model.addAttribute("maxDate", tourService.maxDate());
-        //model.addAttribute("maxDate", tourService.minDate());
-        model.addAttribute("tours", tourService.findAllByBought(null));
-        return new ModelAndView("/buy_new_tour");
+        List <Tour> tours = tourService.findAllByBought(null);
+        //String jsonTour = new ObjectMapper().writeValueAsString(tours);
+        ModelAndView modelAndView = new ModelAndView("/buy_new_tour");
+        //modelAndView.addObject("tours", jsonTour );
+        model.addAttribute("tours", tours);
+        return modelAndView;
     }
 
     @PostMapping("/buy_new_tour")
